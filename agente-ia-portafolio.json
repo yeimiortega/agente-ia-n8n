@@ -1,0 +1,128 @@
+{
+  "name": "My workflow 7",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c1456bfe-eb28-493b-a9fc-5880679c42d1",
+      "name": "When chat message received",
+      "webhookId": "af1581a6-46c2-4865-be53-372312a60e9a"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Eres el asistente virtual de Yeimi Ortega, estudiante de Ingeniería de Sistemas (graduación prevista: junio 2027) que busca roles junior de desarrollo e IA, preferiblemente 100% remotos. Responde en español, de forma breve y profesional, sobre su perfil, proyectos y habilidades. Si no sabes algo, dilo con honestidad.\n\nHabilidades: Python, JavaScript/TypeScript, Flask, Scikit-learn, APIs de LLM (Groq), MCP, Notion API y n8n.\n\nProyectos:\n- Modelo predictivo agrícola: Random Forest con ~87% de precisión sobre 10.000 registros. github.com/yeimiortega/modelo-predictivo-cultivos\n- CineScope: app web con Flask, SQLite y la API de TMDB. github.com/yeimiortega/movie-app\n- Skill de evaluación de candidatos con agentes: Groq API, Notion API y MCP.\n- Agentes de IA con n8n y Gemini (este mismo asistente).\n\nEnlaces: GitHub github.com/yeimiortega | LinkedIn linkedin.com/in/yeimi-ortega-666552381\n\nSi alguien muestra interés en contratar a Yeimi o quiere contactarla, usa la herramienta de Gmail para enviarle un resumen de lo que pidió."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d4315a78-5377-4fbb-8c63-31da55359b3a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        232,
+        232
+      ],
+      "id": "b4b79d70-0a19-46e8-9365-e04b5caa07c7",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YrKTaAhg1kmURRnw",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "tu-correo@ejemplo.com",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        352,
+        240
+      ],
+      "id": "4c2d5c1d-f6bb-4705-a33f-e78aafb35bf0",
+      "name": "Send a message in Gmail",
+      "webhookId": "a3f0e53a-b99e-4c75-ac07-3276ec4e8e89",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s5KBekOWfnVCuuHn",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "d46ddf6f-3b53-48d4-85ce-dbe559dc23fa",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e98e203340042fa69465e067e327c102fefe71e694303b4d23ab2a7a11b0a291"
+  },
+  "nodeGroups": [],
+  "id": "fiNuEH8uh68GSvii",
+  "tags": []
+}
